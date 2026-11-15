@@ -63,7 +63,7 @@ class ErrorBoundary extends React.Component<Props, State> {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 onClick={this.handleRetry}
-                className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
+                className="px-6 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-lg transition-colors duration-200"
               >
                 Try Again
               </button>
@@ -207,7 +207,7 @@ export class APIErrorBoundary extends React.Component<APIErrorBoundaryProps, API
           {showRetry && (
             <button
               onClick={this.handleRetry}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-sm transition-colors duration-200 disabled:bg-gray-400"
+              className="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-sm transition-colors duration-200 disabled:bg-gray-400"
               disabled={!!(apiError?.type === ErrorType.RATE_LIMIT && apiError.retryAfter && apiError.retryAfter > Date.now())}
             >
               {apiError?.type === ErrorType.RATE_LIMIT ? 'Retry After Delay' : 'Retry'}

@@ -17,7 +17,8 @@
     --color-deep-dark: #121212;
     --color-card-dark: #1A1A1A;
     --color-hover-gray: #282828;
-    --color-accent-orange: #FF6B35;
+    --color-brand: #8B5CF6;
+    --color-brand-pink: #EC4899;
     --color-success-green: #1ED760;
     --color-warning-amber: #FFA726;
     --color-text-primary: #FFFFFF;
@@ -38,7 +39,7 @@
 
     /* Modern glows and shadows */
     --shadow-spotify-glow: 0 0 20px rgb(29, 185, 84, 0.3);
-    --shadow-accent-glow: 0 0 24px rgb(255, 107, 53, 0.25);
+    --shadow-accent-glow: 0 0 24px rgb(139, 92, 246, 0.3);
     --shadow-card-elevated: 0 8px 32px rgba(0, 0, 0, 0.12);
     --shadow-card-hover: 0 16px 48px rgba(0, 0, 0, 0.15);
   }

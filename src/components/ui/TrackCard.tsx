@@ -48,7 +48,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({
         "bg-white dark:bg-card-dark border-0",
         "shadow-sm hover:shadow-card-hover",
         "rounded-xl p-4",
-        isCurrent && "ring-2 ring-accent-orange",
+        isCurrent && "ring-2 ring-brand-500",
         cardHeight,
         "w-[180px]", // Slightly wider for better proportions
         className
@@ -99,7 +99,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({
             aria-label={isCurrentPlaying ? `Pause ${displayTitle}` : `Play ${displayTitle}`}
             className={cn(
               "absolute bottom-2 left-2 flex items-center justify-center w-10 h-10 rounded-full",
-              "bg-accent-orange text-white shadow-lg transition-all duration-200 hover:scale-110",
+              "bg-brand-500 text-white shadow-lg transition-all duration-200 hover:scale-110",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:opacity-100",
               isHovered || isCurrent ? "opacity-100" : "opacity-0"
             )}
@@ -116,7 +116,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({
             className={cn(
               "absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full",
               "bg-black/60 text-white backdrop-blur-sm transition-all duration-200",
-              "hover:bg-accent-orange hover:scale-110",
+              "hover:bg-brand-500 hover:scale-110",
               "focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:opacity-100",
               // Always visible on touch-sized screens, hover/focus-revealed on larger ones
               "opacity-100 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
@@ -131,9 +131,9 @@ export const TrackCard: React.FC<TrackCardProps> = ({
           {/* Track title */}
           <h3 className={cn(
             "font-semibold truncate transition-colors duration-200",
-            isCurrent ? "text-accent-orange" : "text-gray-900 dark:text-text-primary",
+            isCurrent ? "text-brand-500" : "text-gray-900 dark:text-text-primary",
             variant === 'compact' ? "text-sm" : "text-base",
-            "group-hover:text-accent-orange dark:group-hover:text-accent-orange"
+            "group-hover:text-brand-500 dark:group-hover:text-brand-500"
           )}>
             {displayTitle}
           </h3>
@@ -169,8 +169,8 @@ export const TrackCard: React.FC<TrackCardProps> = ({
 
       {/* Hover glow effect */}
       <div className={cn(
-        "absolute -inset-1 bg-gradient-to-r from-spotify-green via-accent-orange to-warning-amber rounded-2xl opacity-0 transition-opacity duration-500 -z-10 blur-md",
-        "dark:bg-gradient-to-r dark:from-blue-800 dark:via-slate-600 dark:to-blue-800",
+        "absolute -inset-1 bg-gradient-to-r from-spotify-green via-brand-500 to-brand-pink rounded-2xl opacity-0 transition-opacity duration-500 -z-10 blur-md",
+        "dark:bg-gradient-to-r dark:from-brand-800 dark:via-slate-600 dark:to-brand-800",
         isHovered && "opacity-10"
       )} />
     </Card>

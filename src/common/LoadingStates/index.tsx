@@ -12,7 +12,7 @@ export const Spinner: React.FC<SpinnerProps> = ({ size = 'md' }) => {
   };
 
   return (
-    <div className={`animate-spin rounded-full border-2 border-gray-300 border-t-blue-500 ${sizeClasses[size]}`} role="status" aria-label="Loading">
+    <div className={`animate-spin rounded-full border-2 border-gray-300 border-t-brand-500 ${sizeClasses[size]}`} role="status" aria-label="Loading">
       <span className="sr-only">Loading...</span>
     </div>
   );
@@ -28,7 +28,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ progress, message }) =
     {message && <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{message}</p>}
     <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
       <div 
-        className="bg-blue-500 h-2 rounded-full transition-all duration-300 ease-out" 
+        className="bg-brand-500 h-2 rounded-full transition-all duration-300 ease-out" 
         style={{ width: `${Math.min(Math.max(progress, 0), 100)}%` }}
         role="progressbar"
         aria-valuenow={progress}

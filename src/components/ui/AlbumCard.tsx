@@ -123,7 +123,7 @@ export const AlbumCard: React.FC<AlbumCardProps> = ({
               size="icon"
               className={cn(
                 "w-16 h-16 rounded-full shadow-xl transition-all duration-200",
-                "bg-accent-orange hover:bg-accent-orange/90",
+                "bg-brand-500 hover:bg-brand-500/90",
                 "hover:scale-110 text-white"
               )}
             >
@@ -158,7 +158,7 @@ export const AlbumCard: React.FC<AlbumCardProps> = ({
           <h3 className={cn(
             "font-semibold text-gray-900 dark:text-text-primary truncate transition-colors duration-200",
             variant === 'compact' ? "text-sm" : "text-base",
-            "group-hover:text-accent-orange dark:group-hover:text-accent-orange"
+            "group-hover:text-brand-500 dark:group-hover:text-brand-500"
           )}>
             {displayTitle}
           </h3>
@@ -203,7 +203,7 @@ export const AlbumCard: React.FC<AlbumCardProps> = ({
 
       {/* Hover glow effect */}
       <div className={cn(
-        "absolute -inset-1 bg-gradient-to-r from-spotify-green via-accent-orange to-warning-amber rounded-2xl opacity-0 transition-opacity duration-500 -z-10 blur-md",
+        "absolute -inset-1 bg-gradient-to-r from-spotify-green via-brand-500 to-brand-pink rounded-2xl opacity-0 transition-opacity duration-500 -z-10 blur-md",
         isHovered && "opacity-10"
       )} />
     </Card>

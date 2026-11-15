@@ -14,7 +14,7 @@ const iconButton =
   'flex items-center justify-center w-7 h-7 rounded-full text-gray-500 dark:text-text-secondary ' +
   'hover:text-gray-900 hover:bg-gray-100 dark:hover:text-white dark:hover:bg-hover-gray ' +
   'disabled:opacity-30 disabled:pointer-events-none transition-colors duration-150 ' +
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange';
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500';
 
 interface QueueRowProps {
   item: QueueItem;
@@ -48,7 +48,7 @@ const QueueRow: React.FC<QueueRowProps> = ({ item, index, total }) => {
       <button
         type="button"
         onClick={() => playFromQueue(item.uid)}
-        className="flex items-center gap-3 min-w-0 flex-1 text-left rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange"
+        className="flex items-center gap-3 min-w-0 flex-1 text-left rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
         aria-label={`Play ${title} now`}
       >
         <img
@@ -116,7 +116,7 @@ const NowPlaying: React.FC = () => {
   const title = trackTitle(currentTrack);
 
   return (
-    <div className="flex items-center gap-4 rounded-xl bg-gradient-to-br from-accent-orange/15 to-transparent dark:from-accent-orange/20 p-3">
+    <div className="flex items-center gap-4 rounded-xl bg-gradient-to-br from-brand-500/15 to-transparent dark:from-brand-500/20 p-3">
       <div className="relative shrink-0">
         <img
           src={getImageUrl(currentTrack.poster_path)}
@@ -124,7 +124,7 @@ const NowPlaying: React.FC = () => {
           className="w-20 h-20 rounded-lg object-cover shadow-md"
         />
         {isPlaying && (
-          <span className="absolute -top-1 -right-1 flex items-end gap-0.5 rounded-full bg-accent-orange px-1.5 py-1" aria-hidden="true">
+          <span className="absolute -top-1 -right-1 flex items-end gap-0.5 rounded-full bg-brand-500 px-1.5 py-1" aria-hidden="true">
             <span className="w-0.5 h-1.5 bg-white rounded-full animate-pulse" />
             <span className="w-0.5 h-2.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.15s' }} />
             <span className="w-0.5 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.3s' }} />
@@ -135,14 +135,14 @@ const NowPlaying: React.FC = () => {
         <p className="truncate font-semibold text-gray-900 dark:text-text-primary">{title}</p>
         <p className="truncate text-sm text-gray-600 dark:text-text-secondary">{currentTrack.artist || 'Unknown Artist'}</p>
         <div className="mt-3 h-1 w-full rounded-full bg-gray-200 dark:bg-hover-gray overflow-hidden" aria-hidden="true">
-          <div className="h-full bg-accent-orange transition-[width] duration-200" style={{ width: `${progress}%` }} />
+          <div className="h-full bg-brand-500 transition-[width] duration-200" style={{ width: `${progress}%` }} />
         </div>
       </div>
       <button
         type="button"
         onClick={togglePlay}
         aria-label={isPlaying ? 'Pause' : 'Play'}
-        className="flex items-center justify-center w-11 h-11 shrink-0 rounded-full bg-accent-orange text-white shadow-md hover:scale-105 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-orange"
+        className="flex items-center justify-center w-11 h-11 shrink-0 rounded-full bg-brand-500 text-white shadow-md hover:scale-105 transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-500"
       >
         {isPlaying ? <FiPause className="w-5 h-5" /> : <FiPlay className="w-5 h-5 ml-0.5" />}
       </button>
@@ -182,7 +182,7 @@ export const QueuePanel: React.FC = () => {
                 tabIndex={-1}
                 className="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-text-primary focus:outline-none"
               >
-                <MdQueueMusic className="w-5 h-5 text-accent-orange" />
+                <MdQueueMusic className="w-5 h-5 text-brand-500" />
                 Queue
               </h2>
               <button type="button" onClick={closeQueue} className={cn(iconButton, 'w-8 h-8')} aria-label="Close queue">
@@ -209,7 +209,7 @@ export const QueuePanel: React.FC = () => {
                     <button
                       type="button"
                       onClick={clearQueue}
-                      className="text-xs font-medium text-gray-500 hover:text-accent-orange dark:text-text-secondary dark:hover:text-accent-orange rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange"
+                      className="text-xs font-medium text-gray-500 hover:text-brand-500 dark:text-text-secondary dark:hover:text-brand-500 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
                     >
                       Clear
                     </button>

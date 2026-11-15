@@ -51,7 +51,7 @@ export const useCommandPalette = ({
 
   // Load recent searches from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('nextsound_search_history');
+    const saved = localStorage.getItem('groovr_search_history');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -257,7 +257,7 @@ export const useCommandPalette = ({
       setSearchHistory(newHistory);
 
       // Save to localStorage
-      localStorage.setItem('nextsound_search_history', JSON.stringify({
+      localStorage.setItem('groovr_search_history', JSON.stringify({
         queries: newSearches,
         items: newHistory
       }));
@@ -308,7 +308,7 @@ export const useCommandPalette = ({
     clearHistory: () => {
       setRecentSearches([]);
       setSearchHistory([]);
-      localStorage.removeItem('nextsound_search_history');
+      localStorage.removeItem('groovr_search_history');
     }
   };
 };

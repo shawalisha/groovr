@@ -60,7 +60,7 @@ const MusicGrid: FC<MusicGridProps> = ({
           <button
             onClick={handleLoadMoreClick}
             disabled={isLoadingMore}
-            className="px-6 py-3 bg-red-600 hover:bg-red-700 disabled:bg-red-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            className="px-6 py-3 bg-brand-600 hover:bg-brand-700 disabled:bg-brand-400 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           >
             {isLoadingMore ? (
               <div className="flex items-center gap-2">
@@ -78,7 +78,7 @@ const MusicGrid: FC<MusicGridProps> = ({
       {isLoadingMore && !showLoadMoreButton && (
         <div className="flex justify-center py-4">
           <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-            <div className="w-5 h-5 border-2 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-5 h-5 border-2 border-brand-600 border-t-transparent rounded-full animate-spin"></div>
             Loading more tracks...
           </div>
         </div>

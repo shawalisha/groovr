@@ -1,7 +1,7 @@
 import { ENABLE_OFFLINE_CACHE } from './config';
 
 // Cache configuration
-const CACHE_PREFIX = 'nextsound_cache_';
+const CACHE_PREFIX = 'groovr_cache_';
 const CACHE_VERSION = 'v1';
 const CACHE_KEY_PREFIX = `${CACHE_PREFIX}${CACHE_VERSION}_`;
 

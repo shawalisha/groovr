@@ -132,7 +132,7 @@ const Header = ({ onOpenSearch }: HeaderProps) => {
               className={cn(
                 "relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110",
                 isQueueOpen
-                  ? "text-accent-orange"
+                  ? "text-brand-500"
                   : isNotFoundPage || isActive
                   ? "text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
                   : "text-gray-300 hover:text-white"
@@ -140,7 +140,7 @@ const Header = ({ onOpenSearch }: HeaderProps) => {
             >
               <MdQueueMusic className="w-5 h-5" />
               {queue.length > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-accent-orange text-white text-[10px] font-bold leading-4 text-center">
+                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-brand-500 text-white text-[10px] font-bold leading-4 text-center">
                   {queue.length}
                 </span>
               )}

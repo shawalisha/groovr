@@ -1,8 +1,8 @@
 <div align="center" >
   <br/>
   <br/>
-  <img src="/src/assets/svg/nextsound.svg" alt="NextSound logo" width="80" height="auto" />
-  <h1>NextSound</h1>
+  <img src="/src/assets/svg/groovr.svg" alt="Groovr logo" width="80" height="auto" />
+  <h1>Groovr</h1>
   <br/>
 
   <p >
@@ -15,7 +15,7 @@ A music discovery app built with React and TypeScript. <br/> Browse tracks, albu
 
 ## How it works
 
-NextSound runs in two modes depending on your setup:
+Groovr runs in two modes depending on your setup:
 
 ### Demo mode (no API needed)
 Without API credentials:
@@ -55,12 +55,12 @@ The app automatically detects which mode to use.
 ## :camera: Screenshots
 
 ### Hero Section 
-<kbd><img width="800" alt="NextSound Hero Section and Track Grid" src="./src/assets/images/hero.png"></kbd>
+<kbd><img width="800" alt="Groovr Hero Section and Track Grid" src="./src/assets/images/hero.png"></kbd>
 
 <br/>
 
 ### Homepage
-<kbd><img width="800" alt="NextSound Homepage with Music Content" src="./src/assets/images/all-songs.png"></kbd>
+<kbd><img width="800" alt="Groovr Homepage with Music Content" src="./src/assets/images/all-songs.png"></kbd>
 
 
 <br/>
@@ -171,5 +171,5 @@ npm run preview
 
 <div align="center">
   <p>Built with ❤️ for music lovers everywhere</p>
-  <p>Discover your next favorite track with NextSound</p>
+  <p>Discover your next favorite track with Groovr</p>
 </div>

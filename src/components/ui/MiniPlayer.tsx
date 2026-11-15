@@ -132,7 +132,7 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
             onClick={onTogglePlay}
             variant="ghost"
             size="icon"
-            className="flex items-center justify-center w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-200"
+            className="flex items-center justify-center w-8 h-8 bg-brand-600 hover:bg-brand-700 text-white rounded-full transition-colors duration-200"
           >
             {isPlaying ? <FiPause className="w-4 h-4" /> : <FiPlay className="w-4 h-4 ml-0.5" />}
           </Button>
@@ -161,10 +161,10 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
         onClick={handleProgressClick}
       >
         <div 
-          className="h-full bg-blue-600 transition-all duration-100 rounded-full relative group-hover:bg-blue-500"
+          className="h-full bg-brand-600 transition-all duration-100 rounded-full relative group-hover:bg-brand-500"
           style={{ width: `${localProgress}%` }}
         >
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 -mr-1.5"></div>
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-brand-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 -mr-1.5"></div>
         </div>
       </div>
 
@@ -223,7 +223,7 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
             className={cn(
               "flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110",
               isShuffled 
-                ? "text-blue-600 bg-blue-50 dark:bg-blue-900/20" 
+                ? "text-brand-600 bg-brand-50 dark:bg-brand-900/20" 
                 : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
             )}
           >
@@ -272,13 +272,13 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
             className={cn(
               "flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110 relative",
               repeatMode !== 'off' 
-                ? "text-blue-600 bg-blue-50 dark:bg-blue-900/20" 
+                ? "text-brand-600 bg-brand-50 dark:bg-brand-900/20" 
                 : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
             )}
           >
             <FiRepeat className="w-4 h-4" />
             {repeatMode === 'one' && (
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-blue-600 text-white text-xs rounded-full flex items-center justify-center font-bold">1</span>
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-brand-600 text-white text-xs rounded-full flex items-center justify-center font-bold">1</span>
             )}
           </Button>
         </div>
@@ -316,11 +316,11 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
                   <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">{volume}%</div>
                   <div className="flex-1 w-1 bg-gray-200 dark:bg-gray-600 rounded-full relative">
                     <div 
-                      className="w-full bg-blue-600 rounded-full absolute bottom-0"
+                      className="w-full bg-brand-600 rounded-full absolute bottom-0"
                       style={{ height: `${volume}%` }}
                     />
                     <div 
-                      className="absolute w-3 h-3 bg-blue-600 rounded-full -ml-1 cursor-pointer"
+                      className="absolute w-3 h-3 bg-brand-600 rounded-full -ml-1 cursor-pointer"
                       style={{ bottom: `${volume}%`, marginBottom: '-6px' }}
                     />
                   </div>
@@ -341,13 +341,13 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
               className={cn(
                 "relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110",
                 isQueueOpen
-                  ? "text-accent-orange bg-accent-orange/10"
+                  ? "text-brand-500 bg-brand-500/10"
                   : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
               )}
             >
               <MdQueueMusic className="w-5 h-5" />
               {queueCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-accent-orange text-white text-[10px] font-bold leading-4 text-center">
+                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-brand-500 text-white text-[10px] font-bold leading-4 text-center">
                   {queueCount}
                 </span>
               )}
