@@ -3,10 +3,10 @@ export const smallMaxWidth =
   "max-w-[940px] mx-auto md:px-8 sm:px-6 px-4 xl:px-0";
 
 export const listItem =
-  "flex flex-row gap-3 py-1 px-[10px] items-center w-full dark:hover:text-primary hover:text-black transition-all duration-300 font-nunito font-semibold ";
+  "flex flex-row gap-3 py-1 px-[10px] items-center w-full dark:hover:text-primary hover:text-black transition-all duration-300 font-sans font-semibold ";
 
 export const sideBarHeading =
-  "xs:mb-[6px] mb-1 font-nunito font-bold  text-[15.75px] dark:text-gray-50 text-[#333]";
+  "xs:mb-[6px] mb-1 font-sans font-bold  text-[15.75px] dark:text-gray-50 text-[#333]";
 
 export const activeListItem = "dark:text-sec-color text-black font-semibold";
 

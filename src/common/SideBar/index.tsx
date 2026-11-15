@@ -69,7 +69,7 @@ const SideBar: React.FC = () => {
                 })}
               </ul>
 
-              <p className="xs:text-[12px] text-[11.75px] mt-auto sm:mb-6 mb-[20px] text-center font-nunito dark:text-gray-200">
+              <p className="xs:text-[12px] text-[11.75px] mt-auto sm:mb-6 mb-[20px] text-center font-sans dark:text-gray-200">
                 &copy; 2023 by tMovies. All right reserved.
               </p>
             </div>

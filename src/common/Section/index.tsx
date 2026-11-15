@@ -66,7 +66,7 @@ const Section: FC<SectionProps> = ({
   const errorMessage = isError ? getErrorMessage(error) : "";
 
   const sectionStyle = cn(
-    `sm:py-[20px] xs:py-[18.75px] py-[16.75px] font-nunito`,
+    `sm:py-[20px] xs:py-[18.75px] py-[16.75px] font-sans`,
     className
   );
 

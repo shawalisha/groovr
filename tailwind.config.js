@@ -33,10 +33,8 @@ export default {
         'text-muted': '#6B7280',
       },
       fontFamily: {
-        'nunito': ['Nunito', 'sans-serif'],
-        'roboto': ['Roboto', 'sans-serif'],
-        'roboto-condensed': ['Roboto Condensed', 'sans-serif'],
-        'montserrat': ['Montserrat', 'sans-serif'],
+        sans: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
       },
       boxShadow: {
         'spotify-glow': '0 0 20px rgb(29, 185, 84, 0.3)',
