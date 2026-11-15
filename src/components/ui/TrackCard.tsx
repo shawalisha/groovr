@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from './card';
-import {
-  FaClock
-} from 'react-icons/fa';
+import { FaClock } from 'react-icons/fa';
+import { FiPlay, FiPause } from 'react-icons/fi';
+import { MdPlaylistAdd } from 'react-icons/md';
 import { ITrack } from '@/types';
-import { getImageUrl, cn } from '@/utils';
+import { getImageUrl, cn, formatDuration } from '@/utils';
+import { useAudioPlayerContext } from '@/context/audioPlayerContext';
 
 interface TrackCardProps {
   track: ITrack;
   category: string;
-  isPlaying?: boolean;
-  onPlay?: (track: ITrack) => void;
   variant?: 'compact' | 'detailed' | 'featured';
   className?: string;
 }
@@ -18,42 +17,45 @@ interface TrackCardProps {
 export const TrackCard: React.FC<TrackCardProps> = ({
   track,
   category: _category,
-  isPlaying: _isPlayingProp,
-  onPlay: _onPlayProp,
   variant = 'detailed',
   className
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { currentTrack, isPlaying, playTrack, addToQueue } = useAudioPlayerContext();
 
   const { poster_path, original_title: title, name, artist, album, duration } = track;
   const displayTitle = title || name || 'Unknown Track';
 
-  const formatDuration = (ms: number) => {
-    if (!ms) return '';
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
+  const isCurrent = currentTrack?.id === track.id;
+  const isCurrentPlaying = isCurrent && isPlaying;
 
+  const handlePlay = () => playTrack(track);
+
+  const handleAddToQueue = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToQueue(track);
+  };
 
   const cardHeight = variant === 'compact' ? 'h-52' : variant === 'featured' ? 'h-84' : 'h-80';
   const imageHeight = variant === 'compact' ? 160 : variant === 'featured' ? 240 : 200;
 
   return (
-    <Card 
+    <Card
       className={cn(
         "group relative transition-all duration-300 ease-out overflow-hidden",
         "hover:scale-[1.03] hover:-translate-y-2 cursor-pointer",
         "bg-white dark:bg-card-dark border-0",
         "shadow-sm hover:shadow-card-hover",
         "rounded-xl p-4",
+        isCurrent && "ring-2 ring-accent-orange",
         cardHeight,
         "w-[180px]", // Slightly wider for better proportions
         className
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={handlePlay}
     >
       {/* Main Content */}
       <div className="block relative h-full">
@@ -61,10 +63,10 @@ export const TrackCard: React.FC<TrackCardProps> = ({
         <div className="relative overflow-hidden rounded-lg mb-3">
           {/* Loading skeleton */}
           {!imageLoaded && (
-            <div className="absolute inset-0 bg-gray-200 dark:bg-hover-gray animate-pulse rounded-lg" 
+            <div className="absolute inset-0 bg-gray-200 dark:bg-hover-gray animate-pulse rounded-lg"
                  style={{ height: imageHeight }} />
           )}
-          
+
           {/* Album artwork */}
           <img
             src={getImageUrl(poster_path)}
@@ -84,21 +86,58 @@ export const TrackCard: React.FC<TrackCardProps> = ({
           {/* Gradient overlay on hover */}
           <div className={cn(
             "absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-opacity duration-300 rounded-lg",
-            isHovered ? "opacity-100" : "opacity-0"
+            isHovered || isCurrent ? "opacity-100" : "opacity-0"
           )} />
+
+          {/* Play / pause */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePlay();
+            }}
+            aria-label={isCurrentPlaying ? `Pause ${displayTitle}` : `Play ${displayTitle}`}
+            className={cn(
+              "absolute bottom-2 left-2 flex items-center justify-center w-10 h-10 rounded-full",
+              "bg-accent-orange text-white shadow-lg transition-all duration-200 hover:scale-110",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:opacity-100",
+              isHovered || isCurrent ? "opacity-100" : "opacity-0"
+            )}
+          >
+            {isCurrentPlaying ? <FiPause className="w-4 h-4" /> : <FiPlay className="w-4 h-4 ml-0.5" />}
+          </button>
+
+          {/* Add to queue */}
+          <button
+            type="button"
+            onClick={handleAddToQueue}
+            aria-label={`Add ${displayTitle} to queue`}
+            title="Add to queue"
+            className={cn(
+              "absolute top-2 right-2 flex items-center justify-center w-8 h-8 rounded-full",
+              "bg-black/60 text-white backdrop-blur-sm transition-all duration-200",
+              "hover:bg-accent-orange hover:scale-110",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:opacity-100",
+              // Always visible on touch-sized screens, hover/focus-revealed on larger ones
+              "opacity-100 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100"
+            )}
+          >
+            <MdPlaylistAdd className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Track information */}
         <CardContent className="p-0 space-y-2">
           {/* Track title */}
           <h3 className={cn(
-            "font-semibold text-gray-900 dark:text-text-primary truncate transition-colors duration-200",
+            "font-semibold truncate transition-colors duration-200",
+            isCurrent ? "text-accent-orange" : "text-gray-900 dark:text-text-primary",
             variant === 'compact' ? "text-sm" : "text-base",
             "group-hover:text-accent-orange dark:group-hover:text-accent-orange"
           )}>
             {displayTitle}
           </h3>
-          
+
           {/* Artist name */}
           <p className={cn(
             "text-gray-600 dark:text-text-secondary truncate font-medium",

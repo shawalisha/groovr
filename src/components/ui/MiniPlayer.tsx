@@ -14,6 +14,7 @@ import {
   FiMinimize2,
   FiMaximize2
 } from 'react-icons/fi';
+import { MdQueueMusic } from 'react-icons/md';
 import { ITrack } from '@/types';
 import { getImageUrl, cn } from '@/utils';
 
@@ -35,6 +36,9 @@ interface MiniPlayerProps {
   onClose?: () => void;
   isMinimized?: boolean;
   onToggleMinimize?: () => void;
+  onToggleQueue?: () => void;
+  queueCount?: number;
+  isQueueOpen?: boolean;
   className?: string;
 }
 
@@ -55,6 +59,9 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
   onToggleFavorite,
   isMinimized = false,
   onToggleMinimize,
+  onToggleQueue,
+  queueCount = 0,
+  isQueueOpen = false,
   className
 }) => {
   const [isMuted, setIsMuted] = useState(false);
@@ -321,6 +328,31 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
               </div>
             )}
           </div>
+
+          {/* Queue */}
+          {onToggleQueue && (
+            <Button
+              onClick={onToggleQueue}
+              variant="ghost"
+              size="icon"
+              aria-label={isQueueOpen ? 'Hide queue' : `Show queue (${queueCount})`}
+              aria-pressed={isQueueOpen}
+              title="Queue (Q)"
+              className={cn(
+                "relative flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110",
+                isQueueOpen
+                  ? "text-accent-orange bg-accent-orange/10"
+                  : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+              )}
+            >
+              <MdQueueMusic className="w-5 h-5" />
+              {queueCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-accent-orange text-white text-[10px] font-bold leading-4 text-center">
+                  {queueCount}
+                </span>
+              )}
+            </Button>
+          )}
 
           {/* More options */}
           <Button

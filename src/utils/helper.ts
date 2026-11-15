@@ -33,6 +33,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// Formats a duration in milliseconds as m:ss
+export const formatDuration = (ms?: number) => {
+  if (!ms) return '';
+  const minutes = Math.floor(ms / 60000);
+  const seconds = Math.floor((ms % 60000) / 1000);
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+};
+
 // Simplified helper for Spotify images only
 export const getImageUrl = (imagePath: string) => {
   return imagePath || '';  // All images are now full URLs from Spotify

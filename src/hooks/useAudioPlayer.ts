@@ -2,6 +2,11 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { ITrack } from '@/types';
 import { mcpAudioService, PreviewTrack as _PreviewTrack } from '@/services/MCPAudioService';
 
+export interface QueueItem {
+  uid: string;
+  track: ITrack;
+}
+
 interface AudioPlayerState {
   currentTrack: ITrack | null;
   isPlaying: boolean;
@@ -10,7 +15,17 @@ interface AudioPlayerState {
   isShuffled: boolean;
   repeatMode: 'off' | 'one' | 'all';
   isMinimized: boolean;
+  queue: QueueItem[];
+  isQueueOpen: boolean;
 }
+
+const createQueueItem = (track: ITrack): QueueItem => ({
+  uid:
+    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? crypto.randomUUID()
+      : `${track.id}-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  track,
+});
 
 export const useAudioPlayer = () => {
   const [state, setState] = useState<AudioPlayerState>({
@@ -21,20 +36,25 @@ export const useAudioPlayer = () => {
     isShuffled: false,
     repeatMode: 'off',
     isMinimized: false,
+    queue: [],
+    isQueueOpen: false,
   });
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const progressInterval = useRef<NodeJS.Timeout | null>(null);
   const simulationInterval = useRef<NodeJS.Timeout | null>(null);
+  // Always points at the latest skipNext so listeners registered once can auto-advance
+  const skipNextRef = useRef<() => void>(() => {});
 
   // Initialize audio element
   useEffect(() => {
     audioRef.current = new Audio();
-    
+
     const audio = audioRef.current;
-    
+
     const handleEnded = () => {
       setState(prev => ({ ...prev, isPlaying: false, progress: 0 }));
+      skipNextRef.current();
     };
     
     const handleLoadStart = () => {
@@ -101,7 +121,7 @@ export const useAudioPlayer = () => {
     };
   }, [state.isPlaying]);
 
-  const playTrack = useCallback(async (track: ITrack) => {
+  const playTrack = useCallback(async (track: ITrack, forceRestart = false) => {
     console.log('🎵 Playing track:', track.title || track.name);
 
     // Clear any existing simulation interval
@@ -110,8 +130,8 @@ export const useAudioPlayer = () => {
       simulationInterval.current = null;
     }
 
-    // If it's the same track, just toggle play/pause
-    if (state.currentTrack?.id === track.id) {
+    // If it's the same track, just toggle play/pause (unless the queue asked to play it again)
+    if (!forceRestart && state.currentTrack?.id === track.id) {
       setState(prev => ({ ...prev, isPlaying: !prev.isPlaying }));
       if (state.isPlaying) {
         audioRef.current?.pause();
@@ -255,6 +275,7 @@ export const useAudioPlayer = () => {
             simulationInterval.current = null;
           }
           setState(prev => ({ ...prev, isPlaying: false, progress: 0 }));
+          skipNextRef.current();
         }
       }, 250); // Optimized to match real audio progress updates
     }
@@ -292,6 +313,7 @@ export const useAudioPlayer = () => {
               simulationInterval.current = null;
             }
             setState(prev => ({ ...prev, isPlaying: false, progress: 0 }));
+            skipNextRef.current();
           }
         }, 250); // Consistent timing with other progress updates
       }
@@ -301,8 +323,83 @@ export const useAudioPlayer = () => {
   }, [state.isPlaying, state.currentTrack, state.progress]);
 
   const skipNext = useCallback(() => {
-    console.log('Skip next - not implemented yet');
-    // TODO: Implement next track logic
+    const [next, ...rest] = state.queue;
+
+    if (!next) {
+      // Nothing queued: stop at the end of the current track
+      audioRef.current?.pause();
+      if (simulationInterval.current) {
+        clearInterval(simulationInterval.current);
+        simulationInterval.current = null;
+      }
+      setState(prev => ({ ...prev, isPlaying: false, progress: 0 }));
+      return;
+    }
+
+    setState(prev => ({ ...prev, queue: rest }));
+    playTrack(next.track, true);
+  }, [state.queue, playTrack]);
+
+  useEffect(() => {
+    skipNextRef.current = skipNext;
+  }, [skipNext]);
+
+  // Queue actions
+  const addToQueue = useCallback((track: ITrack) => {
+    if (!state.currentTrack) {
+      // Nothing playing yet: start this track instead of queueing it
+      setState(prev => ({ ...prev, isQueueOpen: true }));
+      playTrack(track);
+      return;
+    }
+    setState(prev => ({
+      ...prev,
+      queue: [...prev.queue, createQueueItem(track)],
+      isQueueOpen: true,
+    }));
+  }, [state.currentTrack, playTrack]);
+
+  const removeFromQueue = useCallback((uid: string) => {
+    setState(prev => ({ ...prev, queue: prev.queue.filter(item => item.uid !== uid) }));
+  }, []);
+
+  const moveQueueItem = useCallback((uid: string, direction: 'up' | 'down') => {
+    setState(prev => {
+      const index = prev.queue.findIndex(item => item.uid === uid);
+      const target = direction === 'up' ? index - 1 : index + 1;
+      if (index === -1 || target < 0 || target >= prev.queue.length) return prev;
+      const queue = [...prev.queue];
+      [queue[index], queue[target]] = [queue[target], queue[index]];
+      return { ...prev, queue };
+    });
+  }, []);
+
+  const reorderQueue = useCallback((queue: QueueItem[]) => {
+    setState(prev => ({ ...prev, queue }));
+  }, []);
+
+  const clearQueue = useCallback(() => {
+    setState(prev => ({ ...prev, queue: [] }));
+  }, []);
+
+  const playFromQueue = useCallback((uid: string) => {
+    const index = state.queue.findIndex(item => item.uid === uid);
+    if (index === -1) return;
+    const item = state.queue[index];
+    setState(prev => ({ ...prev, queue: prev.queue.filter((_, i) => i > index) }));
+    playTrack(item.track, true);
+  }, [state.queue, playTrack]);
+
+  const openQueue = useCallback(() => {
+    setState(prev => ({ ...prev, isQueueOpen: true }));
+  }, []);
+
+  const closeQueue = useCallback(() => {
+    setState(prev => ({ ...prev, isQueueOpen: false }));
+  }, []);
+
+  const toggleQueue = useCallback(() => {
+    setState(prev => ({ ...prev, isQueueOpen: !prev.isQueueOpen }));
   }, []);
 
   const skipPrevious = useCallback(() => {
@@ -354,7 +451,14 @@ export const useAudioPlayer = () => {
       audioRef.current.src = '';
     }
     
-    setState({
+    if (simulationInterval.current) {
+      clearInterval(simulationInterval.current);
+      simulationInterval.current = null;
+    }
+
+    // Reset playback but keep the user's queue
+    setState(prev => ({
+      ...prev,
       currentTrack: null,
       isPlaying: false,
       progress: 0,
@@ -362,7 +466,7 @@ export const useAudioPlayer = () => {
       isShuffled: false,
       repeatMode: 'off',
       isMinimized: false,
-    });
+    }));
   }, []);
 
   return {
@@ -374,7 +478,9 @@ export const useAudioPlayer = () => {
     isShuffled: state.isShuffled,
     repeatMode: state.repeatMode,
     isMinimized: state.isMinimized,
-    
+    queue: state.queue,
+    isQueueOpen: state.isQueueOpen,
+
     // Actions
     playTrack,
     togglePlay,
@@ -387,5 +493,14 @@ export const useAudioPlayer = () => {
     toggleFavorite,
     toggleMinimize,
     closePlayer,
+    addToQueue,
+    removeFromQueue,
+    moveQueueItem,
+    reorderQueue,
+    clearQueue,
+    playFromQueue,
+    openQueue,
+    closeQueue,
+    toggleQueue,
   };
 };

@@ -23,11 +23,6 @@ const MusicGrid: FC<MusicGridProps> = ({
 }) => {
   const [visibleCount, setVisibleCount] = useState(initialDisplayCount);
 
-  const handlePlay = (track: ITrack) => {
-    console.log('🎵 Track clicked (audio player removed):', track.name || track.title);
-    // Audio player functionality removed - this is now just a visual music browser
-  };
-
   const handleLoadMoreClick = () => {
     if (tracks.length > visibleCount) {
       // Show more of existing tracks first
@@ -53,8 +48,6 @@ const MusicGrid: FC<MusicGridProps> = ({
             <TrackCard
               track={track}
               category={category}
-              isPlaying={false}
-              onPlay={handlePlay}
               variant="detailed"
             />
           </div>
